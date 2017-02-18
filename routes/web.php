@@ -18,24 +18,10 @@ Route::get('logout', 'auth\LoginController@logout');
 
 
 Route::get('/test', function () {
-// $product =   \App\Product::findOrFail(1);
-    $product2 = new \App\Product();
-    // dd($product);
-    $image = new \App\Image(['image_name' => 'fefsdf.jpg']);
-    $product2->images()->save($image);
 
-
-
-
-
-
-
-
-
-
-
-
-
+    $product = \App\Product::findOrFail(3);
+   $image = $product->images()->first();
+   echo $image->image_name;
 
 
 } );
@@ -48,6 +34,7 @@ Route::group(['prefix' => 'admin', 'middleware' => 'auth'], function () {
 
     Route::resource('product', 'ProductsController');
     Route::resource('category', 'CategoriesController');
+    Route::resource('brand', 'BrandsController');
 } );
 
 

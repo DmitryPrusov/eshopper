@@ -2,16 +2,28 @@
 
 namespace App\Http\Controllers;
 
+use App\Brand;
 use Illuminate\Http\Request;
+use Illuminate\Http\Response;
 
-class CategoriesController extends Controller
+class BrandsController extends Controller
 {
-
+    /**
+     * Display a listing of the resource.
+     *
+     * @return \Illuminate\Http\Response
+     */
     public function index()
     {
-
+        $brands = Brand::all() ;
+        return view('admin.brand.index', compact('brands'));
     }
 
+    /**
+     * Show the form for creating a new resource.
+     *
+     * @return \Illuminate\Http\Response
+     */
     public function create()
     {
 
@@ -25,7 +37,8 @@ class CategoriesController extends Controller
      */
     public function store(Request $request)
     {
-
+        $brand = Brand::create($request->all());
+        return Response::json($brand);
     }
 
     /**
@@ -47,7 +60,8 @@ class CategoriesController extends Controller
      */
     public function edit($id)
     {
-        //
+        $brand = Brand::find($id);
+        return Response::json($brand);
     }
 
     /**
@@ -59,7 +73,11 @@ class CategoriesController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $brand = Brand::find($id);
+        $brand->brand_name = $request->brand_name;
+        $brand->save();
+
+
     }
 
     /**
@@ -70,6 +88,7 @@ class CategoriesController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $brand = Brand::destroy($id);
+        return Response::json($brand);
     }
 }

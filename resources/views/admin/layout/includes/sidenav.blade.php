@@ -7,12 +7,15 @@
                     Dashboard</a></li>
             <li class="submenu">
                 <a href="#">
-                    <i class="glyphicon glyphicon-list"></i> Products
+                    <i class="glyphicon glyphicon-list"></i> Товары
                     <span class="caret pull-right"></span>
                 </a>
                 <!-- Sub menu -->
                 <ul>
-                    <li><a href="{{route('admin.index')}}">Add Product</a></li>
+                    <li><a href="{{route('product.index')}}">Список товаров</a></li>
+                    <li><a href="{{route('product.create')}}">Добавить товар</a></li>
+
+
                 </ul>
             </li>
         </ul>

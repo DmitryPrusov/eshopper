@@ -17,35 +17,31 @@ class ProductsController extends Controller
      */
     public function index()
     {
-        //
+        $products = Product::all();
+        return view('admin.product.index', compact('products'));
     }
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
     public function create()
     {
-   //Выбираем список: Ключ - name, Значение - id
+
         $categories = Category::pluck('name', 'id');
         return view('admin.product.create', compact('categories'));
 
     }
 
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
     public function store(ProductRequest $request)
     {
         // нужно написать валидацию - для это создали новый Request - php artisan make:request ProductRequest
         $images = $request->file('images');
-        if(!empty($images)):
             // создаем новый экземпляр класса
             $product = new Product();
+        $product->name = $request->name;
+        $product->description = $request->description;
+        $product->price = $request->price;
+        $product->category_id = $request->category_id;
+        $product->size = $request->size;
+        //сохраняем все данные
+        $product->save();
             foreach($images as $image):
                 //получаем каждое имя
                 $imageName = $image->getClientOriginalName();
@@ -54,19 +50,9 @@ class ProductsController extends Controller
                 $i = new Image(['image_name' => $imageName] );
                 $product->images()->save($i);
             endforeach;
-//теперь обрабатываем другие поля
-        $product->name = $request->name;
-        $product->description = $request->description;
-        $product->price = $request->price;
-        $product->category_id = $request->category_id;
-        $product->size = $request->size;
-        //сохраняем все данные
-        $product->save();
 
             return redirect()->route('admin.index')->with('message', 'Товар успешно добавлен!');
-        endif;
 
-        
 
     }
 
