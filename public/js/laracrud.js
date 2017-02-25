@@ -5,9 +5,10 @@ $(document).ready(function () {
         $('#btn-save').val("add");
         // обновляем
         $('#modalFormData').trigger("reset");
-
         $('#brandEditorModal').modal('show');
     });
+
+
 
     ////----- Open the modal to UPDATE a link -----////
     $('body').on('click', '.open-modal', function () {
@@ -16,7 +17,7 @@ $(document).ready(function () {
             $('#brand_id').val(data.id);
             $('#brand_name ').val(data.brand);
             $('#btn-save').val("update");
-            $('#linkEditorModal').modal('show');
+            $('#brandEditorModal').modal('show');
         })
     });
 
@@ -58,7 +59,7 @@ $(document).ready(function () {
                     $("#brand" + brand_id).replaceWith(brand);
                 }
                 $('#modalFormData').trigger("reset");
-                $('#linkEditorModal').modal('hide')
+                $('#brandEditorModal').modal('hide')
             },
             error: function (data) {
                 console.log('Error:', data);

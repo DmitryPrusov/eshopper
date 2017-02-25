@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" media="screen" href="{{asset('css/bootstrap.min.css')}}">
     <link rel="stylesheet" href="{{asset('css/admin.css')}}">
+    {{--<link rel="stylesheet" media="screen" href="{{asset('css/4.0.0-alpha.5.bootstrap-flex.min.css')}}">--}}
 </head>
 <body>
 @include('admin.layout.includes.header')
@@ -29,10 +30,14 @@
     </div>
 
 </div><!--/Page Content-->
+
+{{--<script src="{{asset('js/4.0.0-alpha.5.bootstrap.min.js')}}" ></script>--}}
 <script src="{{asset('js/jquery.js')}}" ></script>
-<script src="{{asset('js/tether.js')}}" ></script>
+{{--<script src="{{asset('js/tether.js')}}" ></script>--}}
 <script src="{{asset('js/bootstrap.min.js')}}"></script>
 <script src="{{asset('js/laracrud.js')}}"></script>
+<script src="{{asset('js/brand_crud.js')}}"></script>
+<script src="{{asset('js/category_script.js')}}"></script>
 
 <script>
     $(document).ready(function () {

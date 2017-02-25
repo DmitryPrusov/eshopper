@@ -1,8 +1,8 @@
 
-@extends('layout.main')
+@extends('layout.cart_layout')
 
 @section('content')
-    <div class="col-sm-9 padding-right">
+    <div class="col-sm-9 padding-right  col-sm-offset-1">
             <div class="panel panel-default">
                 <div class="panel-heading">Login</div>
                 <div class="panel-body">
@@ -62,5 +62,4 @@
                 </div>
             </div>
         </div>
-
 @endsection

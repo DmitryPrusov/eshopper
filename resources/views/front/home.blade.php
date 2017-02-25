@@ -13,17 +13,11 @@
                             <div class="single-products">
                                 <div class="productinfo text-center">
 
-                                   <img height="300" src="{{url('images', $image->image_name)}}" alt="" />
+                                    <a href="{{route('item', $product->id)}}" > <img height="300" src="{{url('images', $image->image_name)}}" alt="" /> </a>
                                     <h2>$ {{$product->price}}</h2>
                                     <p>{{$product->name}}</p>
-                                    <a href="#" class="btn btn-default add-to-cart"><i class="fa fa-shopping-cart"></i>Добавить в корзину</a>
+                                    <a href="{{route('cart.edit', $product->id)}}" class="btn btn-default add-to-cart"><i class="fa fa-shopping-cart"></i>Добавить в корзину</a>
                                 </div>
-                            </div>
-                            <div class="choose">
-                                <ul class="nav nav-pills nav-justified">
-                                    <li><a href="#"><i class="fa fa-plus-square"></i>Add to wishlist</a></li>
-                                    <li><a href="#"><i class="fa fa-plus-square"></i>Add to compare</a></li>
-                                </ul>
                             </div>
                         </div>
                     </div>
@@ -32,8 +26,14 @@
                         <h1>Нет товаров!</h1>
                         @endforelse
 
-
                 </div><!--features_items-->
+                {{$products->render()}}
+                {{--<ul class="pagination">--}}
+                    {{--<li class="active"><a href="">1</a></li>--}}
+                    {{--<li><a href="">2</a></li>--}}
+                    {{--<li><a href="">3</a></li>--}}
+                    {{--<li><a href="">&raquo;</a></li>--}}
+                {{--</ul>--}}
 
                 <div class="category-tab"><!--category-tab-->
                     <div class="col-sm-12">

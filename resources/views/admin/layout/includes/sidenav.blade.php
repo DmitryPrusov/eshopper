@@ -4,7 +4,7 @@
         <ul class="nav">
             <!-- Main menu -->
             <li class="current"><a href="{{route('admin.index')}}"><i class="glyphicon glyphicon-home"></i>
-                    Dashboard</a></li>
+                    Панель</a></li>
             <li class="submenu">
                 <a href="#">
                     <i class="glyphicon glyphicon-list"></i> Товары
@@ -16,6 +16,15 @@
                     <li><a href="{{route('product.create')}}">Добавить товар</a></li>
 
 
+                </ul>
+            </li>
+            <li class="submenu">
+                <a href="#">
+                    <i class="glyphicon glyphicon-list"></i> Категории
+                    <span class="caret pull-right"></span>
+                </a>
+                <ul>
+                    <li><a href="{{route('category.index')}}">Работа с категориями</a></li>
                 </ul>
             </li>
         </ul>

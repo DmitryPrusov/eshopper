@@ -5,7 +5,6 @@ namespace App\Http\Controllers;
 use App\Brand;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
-
 class BrandsController extends Controller
 {
     /**
@@ -18,27 +17,15 @@ class BrandsController extends Controller
         $brands = Brand::all() ;
         return view('admin.brand.index', compact('brands'));
     }
-
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
     public function create()
     {
 
     }
 
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
     public function store(Request $request)
     {
         $brand = Brand::create($request->all());
-        return Response::json($brand);
+        return response()->json($brand);
     }
 
     /**
@@ -60,8 +47,9 @@ class BrandsController extends Controller
      */
     public function edit($id)
     {
-        $brand = Brand::find($id);
-        return Response::json($brand);
+        $brand = Brand::findOrFail($id);
+        return response()->json($brand);
+
     }
 
     /**
@@ -71,24 +59,20 @@ class BrandsController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request, $brand_id)
     {
-        $brand = Brand::find($id);
+
+        $brand = Brand::findOrFail($brand_id);
         $brand->brand_name = $request->brand_name;
         $brand->save();
+        return response()->json($brand);
 
 
     }
 
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
     public function destroy($id)
     {
         $brand = Brand::destroy($id);
-        return Response::json($brand);
+        return response()->json($brand);
     }
 }

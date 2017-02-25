@@ -2,16 +2,16 @@
 
 namespace App\Http\Controllers;
 
-use App\Category;
 use App\Product;
+use Gloudemans\Shoppingcart\Facades\Cart;
 use Illuminate\Http\Request;
 
-class CategoriesController extends Controller
+class CartController extends Controller
 {
     public function index()
     {
-        $categories=Category::all();
-        return view('admin.category.index',compact(['categories','products']));
+       $cartItems =  Cart::content();
+        return view('cart.index', compact('cartItems'));
     }
 
     /**
@@ -21,7 +21,7 @@ class CategoriesController extends Controller
      */
     public function create()
     {
-        //
+
     }
 
     /**
@@ -32,23 +32,11 @@ class CategoriesController extends Controller
      */
     public function store(Request $request)
     {
-        Category::create($request->all());
-        return back();
+
     }
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
     public function show($categoryId=null)
     {
-        if(!empty($categoryId)){
-            $products=Category::findOrFail($categoryId)->products;
-        }
-       // $categories=Category::all();
-        return view('admin.category.show',compact(['products']));
     }
 
     /**
@@ -59,7 +47,9 @@ class CategoriesController extends Controller
      */
     public function edit($id)
     {
-        //
+        $product = Product::findOrFail($id);
+        Cart::add($id, $product->name, 1, $product->price, ['size' => 'medium']);
+        return back();
     }
 
     /**
@@ -71,10 +61,7 @@ class CategoriesController extends Controller
      */
     public function update(Request $request, $id)
     {
-        $category = Category::findOrFail($id);
-        $category->name = $request->name;
-        $category->save();
-        return back();
+        //
     }
 
     /**
@@ -85,8 +72,7 @@ class CategoriesController extends Controller
      */
     public function destroy($id)
     {
-        $category = Category::findOrFail($id);
-        $category->destroy($id);
-        return back()->with('alert-danger', 'Category successfully deleted.');
+       Cart::remove($id);
+        return back();
     }
 }

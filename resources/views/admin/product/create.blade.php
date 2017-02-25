@@ -1,9 +1,8 @@
 @extends('admin.layout.admin')
 
-@section('content');
+@section('content')
 
-    <h3> Добавить товар</h3>
-
+    <h3 align="center"> Добавить товар</h3>
 
    <div class="row">
        <div class="col-md-6 col-md-offset-3">
@@ -27,7 +26,7 @@
            </div>
            <div class="form-group">
                {{ Form::label('category_id', 'Категория') }}
-               {{ Form::select('category_id', [1 => 'men'],  null, array('class' => 'form-control')) }}
+               {{ Form::select('category_id', $categories,  null, array('class' => 'form-control')) }}
            </div>
            <div class="form-group">
                {{ Form::label('images', 'Изображения ') }}

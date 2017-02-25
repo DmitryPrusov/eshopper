@@ -11,8 +11,7 @@
         <h3> Нет товаров</h3>
     @endforelse
 </ul>
-
+    {{$products->links()}}
 @endsection
-
 
 
