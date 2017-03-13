@@ -181,6 +181,8 @@ return [
         // Shopping Cart
         Gloudemans\Shoppingcart\ShoppingcartServiceProvider::class,
 
+        Barryvdh\LaravelIdeHelper\IdeHelperServiceProvider::class,
+
     ],
 
     /*

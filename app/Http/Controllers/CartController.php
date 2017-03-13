@@ -61,7 +61,13 @@ class CartController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+
+//       $a =  $request->all();
+//        return view('front.test', compact('a'));
+//        Cart::update($id,['quantity' => $request->quantity, 'size' =>$request->size]);
+
+        Cart::update($id,['qty'=>$request->quantity,"options"=>['size'=>$request->size]]);
+        return back();
     }
 
     /**

@@ -89,4 +89,6 @@ class CategoriesController extends Controller
         $category->destroy($id);
         return back()->with('alert-danger', 'Category successfully deleted.');
     }
+
+
 }

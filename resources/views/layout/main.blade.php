@@ -14,6 +14,9 @@
     <link href="{{asset('eshopper/css/responsive.css')}}" rel="stylesheet">
     <link href="{{asset('eshopper/css/font-awesome.css')}}" rel="stylesheet">
     <link href="{{asset('eshopper/css/font-awesome.min.css')}}" rel="stylesheet">
+    <link href="{{asset('eshopper/css/font-awesome.min.css')}}" rel="stylesheet">
+    <link href="{{asset('eshopper/css/jquery.ui.autocomplete.css')}}" rel="stylesheet">
+
 
     <!--[if lt IE 9]>
 
@@ -59,10 +62,17 @@
             <div class="row">
                 <div class="col-sm-4">
                     <div class="logo pull-left">
-                        <a href="index.html"><img src="images/home/logo.png" alt="" /></a>
+                        <a href="{{route('index')}}"><img src="images/home/logo.png" alt="" /></a>
                     </div>
                 </div>
                 <div class="col-sm-8">
+
+                    @if(Session::has('message'))
+                        <div class="alert alert-info">
+                            <p>{{ Session::get('message') }}</p>
+                        </div>
+                    @endif
+
                     <div class="shop-menu pull-right">
                         <ul class="nav navbar-nav">
                             {{--<li><a href="#"><i class="fa fa-user"></i> {{Auth::check() ? Auth::user()->name : 'Аккаунт'}}</a></li>--}}
@@ -77,14 +87,14 @@
                             <li class="dropdown">
                                 <a href="#"  class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
                                     <i class="fa fa-user" aria-hidden="true"></i>
-                                    <?php  if (Auth::check()) {
+                                    <?php  if (Auth::guard('web')->check()) {
                                         echo Auth::user()->name;
                                     }
                                     else echo "Пользователь";
                                     ?>
                                     <span class="caret"></span></a>
                                 <ul class="dropdown-menu">
-                                    @if (Auth::check())
+                                    @if (Auth::guard('web')->check())
                                         <li><a href="#">Ваш профиль</a></li>
                                         <li role="separator" class="divider"></li>
                                         <li><a href="{{route('logout')}}">Выйти</a></li>
@@ -106,7 +116,7 @@
     <div class="header-bottom"><!--header-bottom-->
         <div class="container">
             <div class="row">
-                <div class="col-sm-9">
+                <div class="col-sm-6">
                     <div class="navbar-header">
                         <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
                             <span class="sr-only">Toggle navigation</span>
@@ -117,40 +127,39 @@
                     </div>
                     <div class="mainmenu pull-left">
                         <ul class="nav navbar-nav collapse navbar-collapse">
-                            <li><a href="{{route('index')}}" class="active">Home</a></li>
-                            <li class="dropdown"><a href="#">Shop<i class="fa fa-angle-down"></i></a>
-                                <ul role="menu" class="sub-menu">
-                                    <li><a href="{{route('products')}}">Products</a></li>
-                                    {{--<li><a href="{{route('product')}}">Product Details</a></li>--}}
-                                    <li><a href="checkout.html">Checkout</a></li>
-                                    <li><a href="cart.html">Cart</a></li>
-                                    <li><a href="{{route('log')}}">Login</a></li>
-                                </ul>
-                            </li>
-                            <li class="dropdown"><a href="#">Blog<i class="fa fa-angle-down"></i></a>
-                                <ul role="menu" class="sub-menu">
-                                    <li><a href="blog.html">Blog List</a></li>
-                                    <li><a href="blog-single.html">Blog Single</a></li>
-                                </ul>
-                            </li>
-                            <li><a href="404.html">404</a></li>
-                            <li><a href="contact-us.html">Contact</a></li>
+                            <li><a href="{{route('index')}}" class="active">Домой</a></li>
+
+                            <li><a href="404.html">О нас </a></li>
+                            <li><a href="contact-us.html">Свяжитесь с нами</a></li>
                         </ul>
                     </div>
                 </div>
-                <div class="col-sm-3">
-                    <div class="search_box pull-right">
-                        <input type="text" placeholder="Search"/>
+                <div class="col-sm-6">
+
+                    {!! Form::open(['route' =>'search', 'method' => 'post', ]) !!}
+                    <form class="navbar-form" role="search">
+                        <div class="input-group add-on">
+
+                            {!! Form::text('search_text', null, array('placeholder' => 'Введите название товара','class' => 'form-control','id'=>'search_text')) !!}
+                            <div class="input-group-btn">
+                                <button class="btn btn-default" type="submit"><i class="glyphicon glyphicon-search"></i></button>
+                            </div>
+                        </div>
+                    </form>
                     </div>
-                </div>
+
+
+
+
+
             </div>
         </div>
     </div><!--/header-bottom-->
 </header><!--/header-->
 
-@if(Route::current()->getName() == 'index')
-    @include('includes.slider')
-    @endif
+{{--@if(Route::current()->getName() == 'index')--}}
+    {{--@include('includes.slider')--}}
+    {{--@endif--}}
 
     <section>
     <div class="container">
@@ -185,7 +194,7 @@
 
                         <div class="panel panel-default">
                             <div class="panel-heading">
-                                <h4 class="panel-title"><a href="{{route(''}}">{{$category->name}}</a></h4>
+                                <h4 class="panel-title"><a href="{{route('cat', $category->id)}}">{{$category->name}}</a></h4>
                             </div>
                         </div>
                         @endforeach
@@ -220,6 +229,7 @@
 
                 </div>
             </div>
+
 
 @yield('content')
 
@@ -313,6 +323,31 @@
 
 <script src="{{asset('eshopper/js/jquery.prettyPhoto.js')}}"></script>
 <script src="{{asset('eshopper/js/main.js')}}"></script>
+
+<script src="{{asset('eshopper/js/jquery-ui.min.js')}}"></script>
+
+
+<script>
+    $(document).ready(function() {
+        src = "{{ route('searchajax') }}";
+        $("#search_text").autocomplete({
+            source: function(request, response) {
+                $.ajax({
+                    url: src,
+                    dataType: "json",
+                    data: {
+                        term : request.term
+                    },
+                    success: function(data) {
+                        response(data);
+
+                    }
+                });
+            },
+            min_length: 3,
+        });
+    });
+</script>
 
 </body>
 </html>

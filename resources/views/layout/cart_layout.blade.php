@@ -55,33 +55,45 @@
         </div>
     </div><!--/header_top-->
 
+
     <div class="header-middle"><!--header-middle-->
         <div class="container">
             <div class="row">
                 <div class="col-sm-4">
                     <div class="logo pull-left">
-                        <a href="index.html"><img src="images/home/logo.png" alt="" /></a>
+                        <a href="{{route('index')}}"><img src="images/home/logo.png" alt="" /></a>
                     </div>
                 </div>
                 <div class="col-sm-8">
+
+                    @if(Session::has('message'))
+                        <div class="alert alert-info">
+                            <p>{{ Session::get('message') }}</p>
+                        </div>
+                    @endif
+
                     <div class="shop-menu pull-right">
                         <ul class="nav navbar-nav">
                             {{--<li><a href="#"><i class="fa fa-user"></i> {{Auth::check() ? Auth::user()->name : 'Аккаунт'}}</a></li>--}}
                             <li><a href="#"><i class="fa fa-star"></i> Wishlist</a></li>
                             <li><a href="checkout.html"><i class="fa fa-crosshairs"></i> Checkout</a></li>
-                            <li><a href="{{route('cart.index')}}"><i class="fa fa-shopping-cart" aria-hidden="true"></i> Cart</a></li>
+                            <li><a href="{{route('cart.index')}}"><i class="fa fa-shopping-cart" aria-hidden="true"></i> Корзина
+                                <span class="badge">
+                                    {{Cart::count()}}
+                                </span>
+                                </a></li>
 
                             <li class="dropdown">
                                 <a href="#"  class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
                                     <i class="fa fa-user" aria-hidden="true"></i>
-                                    <?php  if (Auth::check()) {
+                                    <?php  if (Auth::guard('web')->check()) {
                                         echo Auth::user()->name;
                                     }
                                     else echo "Пользователь";
                                     ?>
                                     <span class="caret"></span></a>
                                 <ul class="dropdown-menu">
-                                    @if (Auth::check())
+                                    @if (Auth::guard('web')->check())
                                         <li><a href="#">Ваш профиль</a></li>
                                         <li role="separator" class="divider"></li>
                                         <li><a href="{{route('logout')}}">Выйти</a></li>
@@ -98,7 +110,7 @@
                 </div>
             </div>
         </div>
-    </div><!--/header-middle-->
+    </div><!--<!--/header-middle-->
 
 </header><!--/header-->
 

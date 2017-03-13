@@ -28,7 +28,6 @@ class ProductsController extends Controller
         return view('admin.product.create', compact('categories'));
 
     }
-
     public function store(ProductRequest $request)
     {
         // нужно написать валидацию - для это создали новый Request - php artisan make:request ProductRequest

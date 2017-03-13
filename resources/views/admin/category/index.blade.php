@@ -98,6 +98,7 @@
                 {!! Form::open(['method' => 'DELETE', 'id' => 'delForm']) !!}
                 <button type="submit" class="btn btn-danger">Удалить</button>
                 {!! Form::close() !!}
+
             </div>
         </div>
     </div>
